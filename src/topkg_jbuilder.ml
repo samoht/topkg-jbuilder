@@ -30,7 +30,7 @@ let describe
     |> List.filter ~f:(String.is_suffix ~affix:".opam")
   in
   if opam_files = [] then begin
-    Log.err (fun m -> m "no <package>.opam file found.");
+    Log.err (fun m -> m "no <package>.opam files found.");
     exit 1
   end;
   let package_names =
