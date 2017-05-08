@@ -42,7 +42,7 @@ let describe
     match name with
     | Some name ->
       if not (List.mem name ~set:package_names) then begin
-        Log.err (fun m -> m "%s.opam file doesn't exist." name);
+        Log.err (fun m -> m "file %s.opam doesn't exist." name);
         exit 1
       end;
       name
