@@ -30,7 +30,7 @@ let describe
     |> List.filter ~f:(String.is_suffix ~affix:".opam")
   in
   if opam_files = [] then begin
-    Log.err (fun m -> m "no <package>.opam file found!");
+    Log.err (fun m -> m "no <package>.opam file found.");
     exit 1
   end;
   let package_names =
@@ -40,7 +40,12 @@ let describe
   in
   let name =
     match name with
-    | Some n -> n
+    | Some name ->
+      if not (List.mem name ~set:package_names) then begin
+        Log.err (fun m -> m "%s.opam file doesn't exist." name);
+        exit 1
+      end;
+      name
     | None ->
       let shortest =
         match package_names with
