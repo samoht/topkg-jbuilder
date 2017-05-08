@@ -5,7 +5,7 @@ let build =
   Pkg.build ()
     ~cmd:(fun _c os _files ->
       let jbuilder = Conf.tool "jbuilder" os in
-      OS.Cmd.run @@ Cmd.(jbuilder % "build"))
+      OS.Cmd.run @@ Cmd.(jbuilder % "build" % "--root" % "."))
     ~clean:(fun os ~build_dir ->
       let rm = Conf.tool "rm" os in
       let find = Conf.tool "find" os in
