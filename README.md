@@ -15,7 +15,7 @@ Note that Topkg-jbuilder only supports the `topkg` command line
 tool. Since Jbuilder already handles installation, you don't need to
 describe the contents of your project in the `pkg/pkg.ml` file or
 replace the build invokcation by `ocaml pkg/pkg.ml build ...` as this
-is usually the case in project using topkg.
+is usually the case in projects using topkg.
 
 You only need to customize the `pkg.ml` file with the bits related to
 the release of your package.
@@ -79,7 +79,7 @@ option to `jbuilder subst`:
 
 ```
 build: [
-  ["jbuilder" "subst" -n "foo"] {pinned}
+  ["jbuilder" "subst" "-n" "foo"] {pinned}
   ["jbuilder" "build" "-p" name "-j" jobs]
 ]
 ```
