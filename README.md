@@ -1,6 +1,5 @@
 Topkg-jbuilder - Helpers for using topkg with jbuilder
 ======================================================
-%%VERSION%%
 
 Topkg-jbuilder exposes helpers for using [topkg-care][topkg] in
 projects using [Jbuilder][jbuilder].
