@@ -1,3 +1,7 @@
+(** Helpers for using topkg with jbuilder.
+
+    {e %%VERSION%% - {{:%%PKG_HOMEPAGE%%}homepage}} *)
+
 open Topkg
 
 (** Similar to [Topkg.Pkg.describe] but with different defaults suited for jbuilder.
