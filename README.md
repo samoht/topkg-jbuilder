@@ -78,7 +78,7 @@ option to `jbuilder subst`:
 
 ```
 build: [
-  ["jbuilder" "subst" "-n" "foo"] {pinned}
+  ["jbuilder" "subst" "-n" name] {pinned}
   ["jbuilder" "build" "-p" name "-j" jobs]
 ]
 ```
