@@ -66,9 +66,10 @@ let is_doc files =
   List.mem "doc/api.docdir/index.html" ~set:files
 
 let build =
-  let run_jbuilder _conf os args =
+  let run_jbuilder conf os args =
       let jbuilder = Conf.tool "jbuilder" os in
-      OS.Cmd.run @@ Cmd.(jbuilder %% args % "--root" % ".")
+      let dev_opt = Cmd.(on (Conf.build_context conf = `Dev) (v "--dev")) in
+      OS.Cmd.run @@ Cmd.(jbuilder %% args % "--root" % "." %% dev_opt)
   in
   Pkg.build ()
     ~cmd:(fun conf os files ->
