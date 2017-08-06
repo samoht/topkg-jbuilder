@@ -66,12 +66,15 @@ let is_doc files =
   List.mem "doc/api.docdir/index.html" ~set:files
 
 let build =
-  Pkg.build ()
-    ~cmd:(fun _c os files ->
+  let run_jbuilder _conf os args =
       let jbuilder = Conf.tool "jbuilder" os in
+      OS.Cmd.run @@ Cmd.(jbuilder %% args % "--root" % ".")
+  in
+  Pkg.build ()
+    ~cmd:(fun conf os files ->
       Log.debug (fun l -> l "files=%s" (String.concat ", " files));
       if is_doc files then (
-        OS.Cmd.run @@ Cmd.(jbuilder % "build" % "@doc" % "--root" % ".")
+        run_jbuilder conf os Cmd.(empty % "build" % "@doc")
         >>= fun () ->
         let src = "_build" // "default" // "_doc" in
         let dst = "_build" // "doc" // "api.docdir" in
@@ -79,7 +82,12 @@ let build =
         mkdir dst >>= fun () ->
         rename src dst
       ) else
-        OS.Cmd.run @@ Cmd.(jbuilder % "build" % "--root" % "."))
+        run_jbuilder conf os Cmd.(empty % "build"))
+    ~post:(fun conf ->
+        if Conf.build_tests conf then
+          run_jbuilder conf `Host_os Cmd.(empty % "runtest")
+        else Ok ()
+    )
     ~clean:(fun os ~build_dir ->
       let rm = Conf.tool "rm" os in
       let find = Conf.tool "find" os in
@@ -154,4 +162,4 @@ let describe
     ?publish
     ~build
     @@ fun _c ->
-    Ok [ (*Pkg.test "jbuilder" ~auto:false ~args:Cmd.(empty % "runtest")*) ]
+    Ok []
