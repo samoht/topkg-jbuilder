@@ -86,7 +86,7 @@ let build =
         run_jbuilder conf os Cmd.(empty % "build"))
     ~post:(fun conf ->
         if Conf.build_tests conf then
-          run_jbuilder conf `Host_os Cmd.(empty % "runtest")
+          run_jbuilder conf `Host_os Cmd.(empty % "runtest" % "-j" % "1")
         else Ok ()
     )
     ~clean:(fun os ~build_dir ->
